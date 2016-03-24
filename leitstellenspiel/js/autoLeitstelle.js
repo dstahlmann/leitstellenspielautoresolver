@@ -3,37 +3,6 @@
 //=============================================================
 var currentEmergencyCalls = [];
 
-var vehicleTypeSwitch = 0;
-
-var RTWid = [
-	'3442214',	// Bünde-01
-	'3442209',	// Bünde-02
-	'3443342',	// Bünde-03
-	'3623514',	// Bünde-04
-	'3631535',	// Bünde-05
-	'3631537',	// Bünde-06
-	'3449124',	// Minden-01
-	'3501583',	// Spenge-01
-	'3514950',	// Spenge-02
-	'3587844',	// Spenge-03
-	'3587847',	// Spenge-04
-	'3548217'	// Spenge-05	
-];
-
-var FuStWid = [
-	'3452473',	// Bünde-01
-	'3453712',	// Bünde-02
-	'3453851',	// Bünde-03
-	'3581546',	// Löhne-01
-	'3581577',	// Löhne-02
-	//'n/a',	// Löhne-03
-	'3564818',	// Minden-01
-	'3564835',	// Minden-02
-	'3566238',	// Minden-03
-	'3403255',	// Spenge-01
-	'3403234',	// Spenge-02
-	'3420233',	// Spenge-03
-];
 
 //=============================================================
 //Functions
@@ -42,7 +11,7 @@ function bootstrap()
 {
 	setInterval( collectNewCases, 7000 );
 	setInterval( checkForUnsolved, 5000 );
-	setInterval( function(){ checkVehicles(); }, 45000 );
+	setInterval( checkVehicles, 10000 );
 }
 
 function collectNewCases()
@@ -132,19 +101,19 @@ function getHumanTime()
 
 function checkVehicles()
 {
-	//if( vehicleTypeSwitch == 0 ){ vehicleTypeSwitch = 1; }else{ vehicleTypeSwitch = 0; }
-	//if( vehicleTypeSwitch == 0 ){ checkRTW(); }
-	//if( vehicleTypeSwitch == 1 ){ checkFuStw(); }
-	
-	checkRTW();
+	var radioCalls = $( '#radio_messages_important > li' );
+	for( i = 0; i < radioCalls.length; i++ )
+	{
+		radioCall = radioCalls[i].getAttribute('class');
+		vehicleId = radioCall.substr( radioCall.lastIndexOf( '_' ) +1 ).trim();
+		
+		sendRTWtoHospital( vehicleId );
+	}
 }
 
-function checkRTW()
+function sendRTWtoHospital( RTWid )
 {
-	for( i = 0; i < RTWid.length; i++ )
-	{
-		window.open( 'http://www.leitstellenspiel.de/vehicles/'+RTWid[i] );
-	}
+	window.open( 'http://www.leitstellenspiel.de/vehicles/' + RTWid );
 }
 
 function checkFuStw()

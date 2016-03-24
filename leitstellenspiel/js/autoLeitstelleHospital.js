@@ -4,7 +4,8 @@
 var hospitalId = [
 	'1109352', 	// Krankenhaus "Lukas Krankenhaus"
 	'974509',	// Krankenhaus "Ev. Krankenhaus Enger"
-	'1016818',	// Krankenhaus "DRK Medical Centre Herford"
+	//'1016818',	// Krankenhaus "DRK Medical Centre Herford"
+	'500994',	// Krankenhaus "Klinik am Rosengarten"
 	'24937',	// Krankenhaus "Bad Oeynhausen"
 	'39052',	// Krankenhaus "Herford 2"
 	'199337'	// Krankenhaus "Herford 1"
