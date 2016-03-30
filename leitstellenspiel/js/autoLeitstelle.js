@@ -31,7 +31,7 @@ function extractInformation( eCalls )
 	var id = 0;
 	var situation = "";
 	
-	for (i = 0; i < eCalls.length; i++)
+	for( i = 0; i < eCalls.length; i++ )
 	{
 		id = eCalls[i].getAttribute( 'id' ).substr( 8 );
 		situation = $( '#mission_panel_heading_' + id + ' > .map_position_mover' );
@@ -107,21 +107,13 @@ function checkVehicles()
 		radioCall = radioCalls[i].getAttribute('class');
 		vehicleId = radioCall.substr( radioCall.lastIndexOf( '_' ) +1 ).trim();
 		
-		sendRTWtoHospital( vehicleId );
+		responseCall( vehicleId );
 	}
 }
 
-function sendRTWtoHospital( RTWid )
+function responseCall( vehicleId )
 {
-	window.open( 'http://www.leitstellenspiel.de/vehicles/' + RTWid );
-}
-
-function checkFuStw()
-{
-	for( i = 0; i < FuStWid.length; i++ )
-	{
-		window.open( 'http://www.leitstellenspiel.de/vehicles/'+FuStWid[i] );
-	}
+	window.open( 'http://www.leitstellenspiel.de/vehicles/' + vehicleId );
 }
 
 

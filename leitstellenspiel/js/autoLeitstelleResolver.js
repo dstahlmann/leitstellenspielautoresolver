@@ -7,14 +7,8 @@
 //Functions
 //=============================================================
 function bootstrap()
-{
-	if( $( 'a > img' ).attr('src') == '/images/osterei_0.png' ||
-		$( 'a > img' ).attr('src') == '/images/osterei_1.png' ||
-		$( 'a > img' ).attr('src') == '/images/osterei_2.png' ||
-		$( 'a > img' ).attr('src') == '/images/osterei_3.png' ||
-		$( 'a > img' ).attr('src') == '/images/osterei_4.png' ||
-		$( 'a > img' ).attr('src') == '/images/osterei_5.png'
-	){ window.location.href = window.location.href + '/easteregg'; }	
+{	
+	existEasteregg();
 	var missionImage = $( '#missionH1 > img' );
 	if( missionImage[0].getAttribute( 'src' ).indexOf('rot') == -1 )
 	{ goBack(); }
@@ -26,12 +20,12 @@ function responseEmergency()
 {
 	$( 'img' ).remove();
 	$( 'small' ).remove();
-	var situation = $( '#missionH1' ).text().trim();
-	if( situation.lastIndexOf( ' (Brandmeldeanlage)' ) != -1 )
+	var emergencyCase = $( '#missionH1' ).text().trim();
+	if( emergencyCase.lastIndexOf( ' (Brandmeldeanlage)' ) != -1 )
 	{
-		situation = situation.substr( 0, situation.lastIndexOf( ' (Brandmeldeanlage)' ) );
+		emergencyCase = emergencyCase.substr( 0, emergencyCase.lastIndexOf( ' (Brandmeldeanlage)' ) );
 	}
-	getAAO( situation );
+	getAAO( emergencyCase );
 	setTimeout( function(){ $( '#mission_alarm_btn' ).click(); }, 1000 );	
 }
 
@@ -51,9 +45,17 @@ function goBack()
 	window.location.href = 'http://localhost:8668/localPages/goBack.php';
 }
 
-function timer()
+function existEasteregg()
 {
-	return Math.floor( Math.random() * 1000 + Math.random() * 1000 );
+	if( $( 'a > img' ).attr('src') == '/images/osterei_0.png' ||
+		$( 'a > img' ).attr('src') == '/images/osterei_1.png' ||
+		$( 'a > img' ).attr('src') == '/images/osterei_2.png' ||
+		$( 'a > img' ).attr('src') == '/images/osterei_3.png' ||
+		$( 'a > img' ).attr('src') == '/images/osterei_4.png' ||
+		$( 'a > img' ).attr('src') == '/images/osterei_5.png' )
+	{
+		window.location.href = window.location.href + '/easteregg';
+	}	
 }
 
 String.prototype.trim = function () {
@@ -64,7 +66,7 @@ String.prototype.trim = function () {
 //=============================================================
 //Initiate
 //=============================================================
-setTimeout( function(){ bootstrap(); }, timer());
+setTimeout( function(){ bootstrap(); }, 1500);
 
 
 //overwrite alert

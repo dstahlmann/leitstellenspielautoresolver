@@ -1,15 +1,7 @@
 //=============================================================
 //Globals
 //=============================================================
-var hospitalId = [
-	'1109352', 	// Krankenhaus "Lukas Krankenhaus"
-	'974509',	// Krankenhaus "Ev. Krankenhaus Enger"
-	//'1016818',	// Krankenhaus "DRK Medical Centre Herford"
-	'500994',	// Krankenhaus "Klinik am Rosengarten"
-	'24937',	// Krankenhaus "Bad Oeynhausen"
-	'39052',	// Krankenhaus "Herford 2"
-	'199337'	// Krankenhaus "Herford 1"
-];
+var hospitals = [];
 
 //=============================================================
 //Functions
@@ -17,19 +9,26 @@ var hospitalId = [
 function bootstrap()
 {
 	var missionImage = $( '#missionH1 > img' );
-	if( $( '#iframe-inside-container > div' ).hasClass( 'alert alert-info' ) )
-	{ transportPatient(); }
+	if( $( 'img' ).attr('vehicle_type_id') == 28 )
+	{ 		
+		collectHospitals();
+		hospitals.forEach( removeIfHospitalIsFull );
+		sortByDistance();
+		if( hospitals.length >= 5 ){ hospitals = hospitals.slice( 0, 5 ); }
+		transportPatient();	
+	}
 	
-	//if( $( '#btn_to_mission_place' ) )
+	if( $( 'img' ).attr('vehicle_type_id') == 32 )
 	//{ transportPrisoner(); }
+	{ window.close(); }
 	
 	setTimeout( function(){ window.close(); }, 300);
 }
 
 function transportPatient()
 {
-	var targetHospital = Math.floor( ( Math.random() * hospitalId.length ) );
-	window.location.href = window.location.href +'/patient/' + hospitalId[targetHospital];
+	var targetHospital = Math.floor( ( Math.random() * hospitals.length ) );
+	window.location.href = window.location.href +'/patient/' + hospitals[targetHospital];
 }
 
 function transportPrisoner()
@@ -37,9 +36,65 @@ function transportPrisoner()
 	$( '#btn_to_mission_place' ).click();
 }
 
+function removeIfHospitalIsFull( hospital )
+{
+	var path = window.location.href.substr( window.location.href.indexOf('/vehicles') );
+	if( $( "a[href='"+ path + "/patient/" + hospital[0] +"']" ).hasClass( 'btn-danger' ) )
+	{
+		$( "a[href='"+ path + "/patient/" + hospital[0] +"']" ).closest('tr').get(0).remove();
+		hospitals.splice( hospitals.indexOf( hospital ), 1 );
+	}
+}
+
+function sortByDistance( hospital )
+{
+	hospitals.sort( sortHospitalByDistance );
+}
+
+function sortHospitalByDistance( hospitalA, hospitalB )
+{
+	if( parseInt(hospitalA[1]) > parseInt(hospitalB[1]) ){ return 1; }
+    if( parseInt(hospitalA[1]) < parseInt(hospitalB[1]) ){ return -1; } 
+	return 0;	
+}
+
+function collectHospitals()
+{
+	n = $( 'table > tbody' );
+	ownHospitals = n[0].childNodes;
+	allianceHospitals = n[1].childNodes;
+
+	if( ownHospitals.length > 2 )
+	{
+		for( i = 0; i <= ownHospitals.length - 2; i = i + 2 )
+		{
+			var hospital = [];
+			var hospitalId = ownHospitals[i].childNodes[9].childNodes[1].getAttribute( 'href' );
+			hospital.push( hospitalId.substr( hospitalId.lastIndexOf( '/' ) + 1 ) );		
+			var distance = ownHospitals[i].childNodes[3].textContent;
+			hospital.push( distance.substr( 0, distance.indexOf( ',' ) ).trim() );
+			
+			hospitals.push( hospital );
+		}
+	}
+	
+	if( allianceHospitals.length > 2 )
+	{
+		for( i = 0; i <= allianceHospitals.length - 2; i = i + 2 )
+		{
+			var hospital = [];
+			var hospitalId = allianceHospitals[i].childNodes[10].childNodes[1].getAttribute( 'href' );
+			hospital.push( hospitalId.substr( hospitalId.lastIndexOf( '/' ) + 1 ) );		
+			var distance = allianceHospitals[i].childNodes[3].textContent;
+			hospital.push( distance.substr( 0, distance.indexOf( ',' ) ).trim() );
+			
+			hospitals.push( hospital );
+		}
+	}
+}
+
 
 //=============================================================
 //Initiate
 //=============================================================
 setTimeout( function(){ bootstrap(); }, 200 );
-
