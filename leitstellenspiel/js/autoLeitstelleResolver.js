@@ -2,6 +2,12 @@
 //Globals
 //=============================================================
 
+var aao_RTW = 'aao_613072';
+var aao_KTW = 'aao_613078';
+var aao_LNA = 'aao_613206';
+var aao_OrgL = 'aao_613207';
+var aao_RTWn = [ 'aao_613072', 'aao_613073', 'aao_613074', 'aao_613075', 'aao_613077' ];
+
 
 //=============================================================
 //Functions
@@ -10,6 +16,8 @@ function bootstrap()
 {	
 	existEasteregg();
 	var missionImage = $( '#missionH1 > img' );
+	if( $( 'div > .alert-info > a' ) )
+	{ $( 'div > .alert-info > a' ).click(); }
 	if( missionImage[0].getAttribute( 'src' ).indexOf('rot') == -1 )
 	{ goBack(); }
 	else
@@ -25,14 +33,44 @@ function responseEmergency()
 	{
 		emergencyCase = emergencyCase.substr( 0, emergencyCase.lastIndexOf( ' (Brandmeldeanlage)' ) );
 	}
-	getAAO( emergencyCase );
+	if( emergencyCase != 'Krankentransport' )
+	{
+		aaokeys = getAAO( emergencyCase );
+		if( $( '.patient_progress' ).length == 0 )
+		{			
+			aaokeys.forEach( clickButton );
+		}
+		else
+		{	
+			if( $( '.patient_progress' ).length >= 5 ){ clickButton( aao_LNA ); }
+			if( $( '.patient_progress' ).length >= 10 ){ clickButton( aao_OrgL ); }
+			for( i = 0; i <= aaokeys.length; i++ )
+			{
+				if( aaokeys.indexOf( aao_RTWn[i] ) >= 0 ){ aaokeys.splice( aaokeys.indexOf( aao_RTWn[i] ) ,1 ); }
+			}
+			aaokeys.forEach( clickButton );
+			for( i = 1; i <= $( '.patient_progress' ).length; i++ )
+			{
+				clickButton( aao_RTW );
+			}
+		}	
+	}
+	else
+	{ alarmKTW(); }
 	setTimeout( function(){ $( '#mission_alarm_btn' ).click(); }, 1000 );	
 }
 
 function getAAO( emergencyCase )
 {
-	var aaokeys = JSON.parse( localStorage.getItem( emergencyCase ) );
-	aaokeys.forEach( clickButton );
+	return JSON.parse( localStorage.getItem( emergencyCase ) );	
+}
+
+function alarmKTW()
+{
+	if( $( '#available_' + aao_KTW ).hasClass( 'label-success' ) )
+	{ clickButton( aao_KTW ); }
+	else
+	{ clickButton( aao_RTW ); }
 }
 
 function clickButton( buttonId )

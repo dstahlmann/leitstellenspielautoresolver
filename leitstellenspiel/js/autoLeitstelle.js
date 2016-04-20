@@ -2,6 +2,7 @@
 //Globals
 //=============================================================
 var currentEmergencyCalls = [];
+localStorage.setItem( '_emergencyCases', JSON.stringify( [] ) );
 
 
 //=============================================================
@@ -19,8 +20,8 @@ function collectNewCases()
 	var emergencyCalls = $( "#mission_list > .missionSideBarEntry" );
 	extractInformation( emergencyCalls );
 	
-	//var patientTransports = $( "#mission_list_krankentransporte > .missionSideBarEntry" );
-	//extractInformation( patientTransports );
+	var patientTransports = $( "#mission_list_krankentransporte > .missionSideBarEntry" );
+	extractInformation( patientTransports );
 	
 	//var greatHarmCases = $( "#mission_list_alliance > .missionSideBarEntry" );
 	//extractInformation( greatHarmCases );
@@ -40,11 +41,14 @@ function extractInformation( eCalls )
 		while( situationText.lastIndexOf( ',' ) != -1 )
 		{
 			situationText = situationText.substr( 0, situationText.lastIndexOf( ',' ) );
-		}
+		}		
+		
+		patients = $( '#mission_patients_' + id );	
 		
 		var eCall = [];
 		eCall.push( id );
 		eCall.push( situationText );
+		eCall.push( patients[0].childNodes.length );
 		eCall.push( situation[0].getAttribute( 'data-longitude' ) );
 		eCall.push( situation[0].getAttribute( 'data-latitude' ) );
 		
@@ -56,7 +60,11 @@ function setNewCase( caseId, eCall )
 {
 	if( $( '#mission_participant_new_' + caseId ).hasClass('hidden') == false || !document.getElementById( 'mission_missing_' + caseId ) )
 	{
-		currentEmergencyCalls.push( eCall );			
+		currentEmergencyCalls.push( eCall );
+		
+		var emergencyCases = JSON.parse( localStorage.getItem( '_emergencyCases' ) );
+		emergencyCases.push( eCall );
+		localStorage.setItem( '_emergencyCases', JSON.stringify( emergencyCases ) );
 	}
 }
 

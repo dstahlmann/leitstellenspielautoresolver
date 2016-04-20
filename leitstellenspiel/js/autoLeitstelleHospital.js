@@ -3,6 +3,7 @@
 //=============================================================
 var hospitals = [];
 
+
 //=============================================================
 //Functions
 //=============================================================
@@ -14,15 +15,15 @@ function bootstrap()
 		collectHospitals();
 		hospitals.forEach( removeIfHospitalIsFull );
 		sortByDistance();
-		if( hospitals.length >= 5 ){ hospitals = hospitals.slice( 0, 5 ); }
+		if( hospitals.length >= 3 ){ hospitals = hospitals.slice( 3 ); }
 		transportPatient();	
 	}
 	
 	if( $( 'img' ).attr('vehicle_type_id') == 32 )
-	//{ transportPrisoner(); }
-	{ window.close(); }
+	{ transportPrisoner(); }
+	//{ window.close(); }
 	
-	setTimeout( function(){ window.close(); }, 300);
+	setTimeout( function(){ window.close(); }, 500);
 }
 
 function transportPatient()
@@ -33,7 +34,12 @@ function transportPatient()
 
 function transportPrisoner()
 {
-	$( '#btn_to_mission_place' ).click();
+	var targetURL = $( '#btn_to_mission_place' ).attr( 'href' );
+	pathArray = location.href.split( '/' );
+	protocol = pathArray[0];
+	host = pathArray[2];
+	url = protocol + '//' + host;
+	window.location.href = url + targetURL;
 }
 
 function removeIfHospitalIsFull( hospital )
