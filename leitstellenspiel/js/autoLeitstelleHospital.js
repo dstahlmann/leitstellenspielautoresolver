@@ -13,15 +13,13 @@ function bootstrap()
 	if( $( 'img' ).attr('vehicle_type_id') == 28 )
 	{ 		
 		collectHospitals();
-		hospitals.forEach( removeIfHospitalIsFull );
 		sortByDistance();
-		if( hospitals.length >= 3 ){ hospitals = hospitals.slice( 3 ); }
+		if( hospitals.length >= 3 ){ hospitals = hospitals.slice( 0, 3 ); }
 		transportPatient();	
 	}
 	
 	if( $( 'img' ).attr('vehicle_type_id') == 32 )
 	{ transportPrisoner(); }
-	//{ window.close(); }
 	
 	setTimeout( function(){ window.close(); }, 500);
 }
@@ -40,16 +38,6 @@ function transportPrisoner()
 	host = pathArray[2];
 	url = protocol + '//' + host;
 	window.location.href = url + targetURL;
-}
-
-function removeIfHospitalIsFull( hospital )
-{
-	var path = window.location.href.substr( window.location.href.indexOf('/vehicles') );
-	if( $( "a[href='"+ path + "/patient/" + hospital[0] +"']" ).hasClass( 'btn-danger' ) )
-	{
-		$( "a[href='"+ path + "/patient/" + hospital[0] +"']" ).closest('tr').get(0).remove();
-		hospitals.splice( hospitals.indexOf( hospital ), 1 );
-	}
 }
 
 function sortByDistance( hospital )
@@ -80,7 +68,10 @@ function collectHospitals()
 			var distance = ownHospitals[i].childNodes[3].textContent;
 			hospital.push( distance.substr( 0, distance.indexOf( ',' ) ).trim() );
 			
-			hospitals.push( hospital );
+			if( ownHospitals[i].childNodes[9].childNodes[1].getAttribute( 'class' ) == 'btn btn-success' )
+			{
+				hospitals.push( hospital );
+			}
 		}
 	}
 	
@@ -94,7 +85,10 @@ function collectHospitals()
 			var distance = allianceHospitals[i].childNodes[3].textContent;
 			hospital.push( distance.substr( 0, distance.indexOf( ',' ) ).trim() );
 			
-			hospitals.push( hospital );
+			if( allianceHospitals[i].childNodes[10].childNodes[1].getAttribute( 'class' ) == 'btn btn-success' )
+			{
+				hospitals.push( hospital );
+			}
 		}
 	}
 }
