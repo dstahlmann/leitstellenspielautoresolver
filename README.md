@@ -16,10 +16,10 @@ Die Verwendung ist vom Spieleentwickler nicht genehmigt.
 ** unter Windows ist es erforderlich PHP in die PATH-Variable zu schreiben
 * die AAO-Plan.xlsx Datei mit den ID's der eigenen AAO-Buttons ersetzen. Weiteren Informationen unter **Die AAO (Alarm- und Aursückeordnung) erstellen**,
 * entsprechend des Browsers
-**Firefox[/u]: https://addons.mozilla.org/de/firefox/addon/greasemonkey/,
-**Google Chrome: https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=de,
-**Opera: https://addons.opera.com/de/extensions/details/violent-monkey/ oder
-**Safari: http://tampermonkey.net/ im Browser installieren
+* * Firefox: https://addons.mozilla.org/de/firefox/addon/greasemonkey/,
+* * Google Chrome: https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=de,
+* * Opera: https://addons.opera.com/de/extensions/details/violent-monkey/ oder
+* * Safari: http://tampermonkey.net/ im Browser installieren
 * die Greasemonky-Scripte installieren,
 * die webservice.bat (Windows) ausführen / unter Unix entsprechend Webdienst auf localhost:8668 starten
 * leistellenspiel.de / missionchief.com aufrufen
@@ -29,13 +29,13 @@ Es werden entsprechend der AAO-Plan.xlsx die AAO aus Zeile 5 mit den genannten F
 Hier wird auf eine Binäre zählweise zurückgegriffen, dass mit wenigen AAO entsprechend viele Fahrzeuge alarmiert werden können. Die Exelliste gliedert immer in Blöcken zu je 6 AAO, was dem Spiel
 geschuldet ist. Hier sind bis zu 6 Reihen für die AAO möglich.
 
-Wenn die aao_xxxxxx aus Zeile 4 euren AAO ID's entsprechen (die Nummern lassen sich durch untersuchen des Quelltextes herausfinden) muss über den Reiter "Export" eine CSV-Datei gespeichert werden.
+Wenn die <code>aao_xxxxxx</code> aus Zeile 4 euren AAO ID's entsprechen (die Nummern lassen sich durch untersuchen des Quelltextes herausfinden) muss über den Reiter "Export" eine CSV-Datei gespeichert werden.
 Hier beginnt nun ein wenig Fleißarbeit:
 
-1 die Überflüssigen ; mittel Suchen von ";;" und ersetzen durch ";" reduzieren,
-2 die ";" durch "', '"ersetzen,
+1 die Überflüssigen <code>; mittel Suchen von <code>;;</code> und ersetzen durch <code>;</code> reduzieren,
+2 die <code>;</code> durch <code>', '</code>ersetzen,
 3 vor jeden Zeilenbeginn <code>localStorage.setItem( '</code> schreiben,
-4 hinter jedes Alarmstichwort ein "'" schreiben,
+4 hinter jedes Alarmstichwort ein <code>'</code> schreiben,
 5 vor jeden AAO id <code>, JSON.stringify( [ '</code> schreiben,
 6 jede Zeile mit <code>' ] ) );</code> beenden,
 
