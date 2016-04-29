@@ -13,7 +13,7 @@ Die Verwendung ist vom Spieleentwickler nicht genehmigt.
 ## Installation
 * Projektdaten herunterladen,
 * falls nicht vorhanden PHP installieren,
-** unter Windows ist es erforderlich PHP in die PATH-Variable zu schreiben
+* * unter Windows ist es erforderlich PHP in die PATH-Variable zu schreiben
 * die AAO-Plan.xlsx Datei mit den ID's der eigenen AAO-Buttons ersetzen. Weiteren Informationen unter **Die AAO (Alarm- und Aursückeordnung) erstellen**,
 * entsprechend des Browsers
 * * Firefox: https://addons.mozilla.org/de/firefox/addon/greasemonkey/,
@@ -32,7 +32,7 @@ geschuldet ist. Hier sind bis zu 6 Reihen für die AAO möglich.
 Wenn die <code>aao_xxxxxx</code> aus Zeile 4 euren AAO ID's entsprechen (die Nummern lassen sich durch untersuchen des Quelltextes herausfinden) muss über den Reiter "Export" eine CSV-Datei gespeichert werden.
 Hier beginnt nun ein wenig Fleißarbeit:
 
-1 die Überflüssigen <code>; mittel Suchen von <code>;;</code> und ersetzen durch <code>;</code> reduzieren,
+1 die Überflüssigen <code>;</code> mittel Suchen von <code>;;</code> und ersetzen durch <code>;</code> reduzieren,
 2 die <code>;</code> durch <code>', '</code>ersetzen,
 3 vor jeden Zeilenbeginn <code>localStorage.setItem( '</code> schreiben,
 4 hinter jedes Alarmstichwort ein <code>'</code> schreiben,
