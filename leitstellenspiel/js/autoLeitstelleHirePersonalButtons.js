@@ -7,8 +7,10 @@ noFurtherPersonal_BildingIDs = [
 	'1132553',	// DRK Spenge
 	'1149856',	// DRK Minden
 	'1159886',	// DRK Vlotho
+	'1183274',	// DRK Löhne
 	'1151896',	// Rettungswache Porta Westfalica
 	'1196093',	// Christoph Niedersachsen
+	'1226851',	// Christoph Westfalen
 	'1126096',	// BePo Minden
 	'1170953',	// BePo Minden
 	'1136920',	// THW OV Minden
@@ -21,11 +23,11 @@ noFurtherPersonal_BildingIDs = [
 	'1131059',	// Polizeiwache Löhne
 	'1179044',	// Polizeiwache Vlotho
 	'1213334',	// Polizeiwache Bad Oeynhausen
+	'1223028',	// Polizeiwache Herford
 	'398091'	// LG Spenge-Mitte (Altbau)
  ];
  
- hirePersonal_BildingIDs = [
-	'1183274',	// DRK Löhne
+ hirePersonal_BildingIDs = [	
 	'1105424',	// Hauptwache Bünde
 	'1148865',	// Hauptwache Bünde (Nebengebäude)
 	'1091131',	// Hauptwache Minden
@@ -34,7 +36,8 @@ noFurtherPersonal_BildingIDs = [
 	'1129710',	// LG Löhne
 	'1172712',	// LG Oberbecksen	
 	'1089086',	// LG Spenge-Mitte (Neubau)
-	'1212245',	// LG Eilshausen	
+	'1212245',	// LG Eilshausen
+	'1223058',	// Rettungwache Herford
 	'1218686',	// THW OV Vlotho
 	'1210567'	// Hauptwache Minden (CBRN)
  ];
